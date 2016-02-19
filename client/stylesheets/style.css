@@ -11,10 +11,7 @@
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15); }
 
-.navbar {
-  margin-bottom: 10px; 
-  
-}
+
   /* line 32, ../sass/style.scss */
   .navbar .navbar-inner {
     -webkit-border-radius: 0px 0px 3px 3px;

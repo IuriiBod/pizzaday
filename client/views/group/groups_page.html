@@ -1,0 +1,27 @@
+<template name="groupsPage">
+	<div class="group-menu-container">
+		<div class="group-menu">
+			<a href="" id="add-group" title="add" class="group-menu-item">
+				<div class="add-group"></div>
+			</a>
+			<a href="" title="list" class="group-menu-item">
+				<div class="list"></div>
+			</a>
+			<a href="" title="tile" class="group-menu-item">
+				<div class="tile"></div>
+			</a>
+		</div>	
+	</div>
+	
+
+	<div class="group-form-container">
+		{{> groupCreate}}
+	</div>
+
+
+	<div class="group-list" id="group-list">
+		{{#each groups}}
+			{{> groupList}}
+		{{/each}}
+	</div>
+</template>

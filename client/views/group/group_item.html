@@ -1,0 +1,26 @@
+<template name="groupItem">
+	<div class="group-menu-container">
+		<div class="group-menu">
+			<a href="{{pathFor 'groups'}}" title="back" class="group-menu-item">
+				<div class="back-group"></div>
+			</a>
+			<a href="" id="add-coworkers" title="add people" class="group-menu-item">
+				<div class="add-people"></div>
+			</a>
+		</div>	
+	</div>
+
+	<div class="coworkers-form-container">
+		{{> addCoworkers}}
+	</div>
+
+	<div id="group-item">
+		<div class="group-item-name">
+			<h1>{{name}}</h1>
+			<p>Author: {{author}}</p>
+		</div>
+		<div class="group-item-img">
+			<img src="../{{url}}"/>
+		</div>
+	</div>
+</template>

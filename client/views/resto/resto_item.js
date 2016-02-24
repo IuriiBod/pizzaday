@@ -7,8 +7,7 @@ Template.restoItem.helpers({
 Template.restoItem.events ({
 	'click #add-event': function(e, tmpl) {
 		e.preventDefault();
-		//$('.event-form-container').addClass('event-form-container-show');
-
+		
 		var event = {
 			state: 'ordering',
 			groupId: this.resto._id

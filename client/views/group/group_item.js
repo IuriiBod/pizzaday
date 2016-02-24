@@ -1,11 +1,9 @@
 Template.groupItem.helpers({
-		
+	ownPost: function() {
+		return this.group.owner == Meteor.userId();
+	}		
 });
 
 Template.groupItem.events ({
-  	'click #add-coworkers': function(e, tmpl) {
-		e.preventDefault();
-		$('.coworkers-form-container').addClass('coworkers-form-container-show');
-	}
+  	
 });
-

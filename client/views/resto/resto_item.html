@@ -1,19 +1,30 @@
-<template name="groupItem">
+<template name="restoItem">
 	<div class="group-menu-container">
 		<div class="group-menu">
-			<a href="{{pathFor 'groups'}}" title="back" class="group-menu-item">
+			<a href="{{pathFor 'resto'}}" title="back" class="group-menu-item">
 				<div class="back-group"></div>
 			</a>
+			{{#if ownPost}}
+				<a href="" id="add-event" title="add event" class="group-menu-item">
+					<div class="add-event"></div>
+				</a>
+			{{/if}}
 		</div>	
 	</div>
 
-	<div id="group-item">
-		<div class="group-item-name">
-			<h1>{{group.name}}</h1>
-			<p>Author: {{group.author}}</p>
+	{{#if ownPost}}
+		<div class="event-form-container">
+			{{> eventCreate}}
 		</div>
-		<div class="group-item-img">
-			<img src="../{{group.url}}"/>
+	{{/if}}
+
+	<div id="resto-title">
+		<div class="resto-title-img">
+			<img src="../{{resto.url}}"/>
+		</div>
+		<div class="resto-title-name">
+			<h4>{{resto.name}}</h4>
+			<p>Author: {{resto.author}}</p>
 		</div>
 	</div>
 

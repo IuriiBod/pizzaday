@@ -12,8 +12,7 @@ Template.groupCreate.events ({
 			url: $(e.target).find('[name=logo]').val()
 		};
 
-		$(e.target).find('input[type=text]').val('');
-		$('.group-form-container').removeClass('group-form-container-show');
+		resetForm(e);
 
 		Meteor.call('groupInsert', group, function(error, result) {
 		
@@ -33,7 +32,11 @@ Template.groupCreate.events ({
 
 	'reset form': function(e, tmpl) {
 		e.preventDefault();
-		$(e.target).find('input[type=text]').val('');
-		$('.group-form-container').removeClass('group-form-container-show');
+		resetForm(e);
 	}
 });
+
+function resetForm(elem) {
+	$(elem.target).find('input[type=text]').val('');
+	$('.group-form-container').removeClass('group-form-container-show');
+};

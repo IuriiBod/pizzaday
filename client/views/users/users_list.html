@@ -1,0 +1,13 @@
+<template name="usersList">
+  {{#unless ownPost}}
+    <li class="li-users-list">
+      <div class="controll-btn add-in-group" title="add in group"></div>
+      <span class="name-users">
+        {{username}}  
+      </span>
+      <span class="post-users">
+        {{profile.post}}        
+      </span>
+    </li>
+  {{/unless}}
+</template>

@@ -1,7 +1,4 @@
 Template.groupsPage.helpers({
-  groups: function() {
-    return Groups.find();
-  }
 });
 
 

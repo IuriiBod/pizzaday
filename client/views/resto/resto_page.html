@@ -1,0 +1,16 @@
+<template name="restoPage">
+	<div class="group-menu-container">
+		<div class="group-menu">
+			<a href="{{pathFor 'homePage'}}" title="back" class="group-menu-item">
+				<div class="back-group"></div>
+			</a>
+		</div>	
+	</div>
+
+	<h4>Групи (ресто) в яких поточний користувач добавлений</h4>
+	<div class="resto-list" id="resto-list">
+		{{#each restos}}
+			{{> restoList}}
+		{{/each}}
+	</div>
+</template>

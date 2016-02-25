@@ -41,7 +41,8 @@ Template.usersList.events ({
 		} 
 
 		var member = {
-			id: userId
+			id: userId,
+			participate: 0
 		};
 
 		Groups.update({_id: currentGroup}, {$push: { "coworkers": member }})

@@ -8,49 +8,43 @@
 				<a href="" id="add-event" title="add event" class="group-menu-item">
 					<div class="add-event"></div>
 				</a>
+				{{#if event}}
+					<a href="" id="change-status-event" title="change status event" class="group-menu-item">
+						<div class="change-status-event"></div>
+					</a>
+				{{/if}}
 			{{/if}}
+			{{#unless ownPost}}
+				<a href="" id="participate-in-event" title="participate" class="group-menu-item">
+					<div class="participate-in-event"></div>
+				</a>
+			{{/unless}}
 		</div>	
 	</div>
-
-	{{#if ownPost}}
-		<div class="event-form-container">
-			{{> eventCreate}}
-		</div>
-	{{/if}}
 
 	<div id="resto-title">
 		<div class="resto-title-img">
 			<img src="../{{resto.url}}"/>
+			{{#if event}}
+				<div class="event-title-banner"></div>
+			{{/if}}
+		</div>
+		<div class="resto-title-event">
+			{{#if event}}
+				<p class="event-state-{{state}}">{{state}}</p>
+			{{/if}}
 		</div>
 		<div class="resto-title-name">
 			<h4>{{resto.name}}</h4>
 			<p>Author: {{resto.author}}</p>
 		</div>
-	</div>
-
-	<div class="users-list">
-		{{#if ownPost}}
-			<div class="group-members">
-				<h3>Members list</h3>
-				<div id="group-members-list" class="group-members-list">
-					<ul>
-						{{#each group.coworkers}}
-							{{> coworkersList}}
-						{{/each}}
-					</ul>	
-				</div>
-			</div>
-
-			<div class="users-members">
-				<h3>Users list</h3>
-				<div id="users-members-list" class="users-members-list">
-					<ul>
-						{{#each userlist}}
-							{{> usersList}}
-						{{/each}}
-					</ul>	
-				</div>
-			</div>
-		{{/if}}
+		<div class="resto-participants">
+			<h4>Participants</h4>
+			<ul>
+				{{#each resto.coworkers}}
+					{{> restoParticipant}}
+				{{/each}}
+			</ul>	
+		</div>
 	</div>
 </template>

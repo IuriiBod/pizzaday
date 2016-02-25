@@ -9,9 +9,21 @@
     transition: @arg;
 }
 
+.transform(@arg) {
+	-moz-transform: rotate(@arg); /* Для Firefox */
+    -ms-transform: rotate(@arg); /* Для IE */
+    -webkit-transform: rotate(@arg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(@arg); /* Для Opera */
+    transform: rotate(@arg);
+}
+
 body {
   background: @background-color-body;
   color: @body-color;
+}
+
+#container {
+	max-width: 800px;	
 }
 
 .navbar {
@@ -112,6 +124,10 @@ a {
 .back-group {background: url(back.png) no-repeat 0 0;}
 .add-people {background: url(add_people.png) no-repeat 0 0;}
 .add-event {background: url(add_event.png) no-repeat 0 0;}
+.change-status-event {background: url(change_status_event.png) no-repeat 0 0;}
+.participate-in-event {background: url(participate_in_event.png) no-repeat 0 0;}
+.status-participant-1 {background: url(check.png) no-repeat 0 0;}
+.status-participant-0 {background: url(cross.png) no-repeat 0 0;}
 
 .group-form-container {
 	float: left;
@@ -315,13 +331,59 @@ a {
 
 #resto-title {
 	float: left;
-	width: 200px;
-	height: 140px;
-	
+	width: 210px;
+	padding-top: 40px;
+	box-sizing: border-box;
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+		
 	.resto-title-img {
 		float: left;
+		position:relative;
 		width: 100px;
+		
+		.event-title-banner {
+			position: absolute;
+			width: 60px;
+			height: 39px;
+			top: -37px;
+			background: url(pizzaday.png) no-repeat 0 0;		
+		}
 	}
+
+	.resto-title-event {
+		float: left;		
+		width: 109px;
+		height: 100px;
+		padding: 17px 5px 0 5px;
+		text-align: center;
+		font-weight: bold;
+		
+		.event-state-ordering { 
+			color: #0787FF;
+			border: 2px solid #0787FF;
+			border-radius: 5px;
+			.transform(-15deg);
+		}
+		.event-state-ordered {
+			color: #89FFD3;
+			border: 2px solid #89FFD3;
+			border-radius: 5px;
+			.transform(-15deg);
+		}
+		.event-state-delivering {
+			color: #FFFA00;
+			border: 2px solid #FFFA00;
+			border-radius: 5px;
+			.transform(-15deg);
+		}
+		.event-state-delivered {
+			color: #FF0015;
+			border: 2px solid #FF0015;
+			border-radius: 5px;
+			.transform(-15deg);	
+		}
+	}
+
 	.resto-title-name {
 		float: left;
 		width: 100%;
@@ -339,6 +401,50 @@ a {
 		    margin: 0;
 		    padding: 0;
 		    opacity: 0.8;
+		}
+	}
+
+	.resto-participants {
+		float: left;
+		width: 100%;
+		margin: 20px 0 0 0;
+		
+		h4 {
+			text-align: center;
+			background: #f0f0f0;
+			margin: 0;
+			padding: 5px 0;
+		}
+
+		ul {
+			float: left;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		ul .li-participant-list {
+			float: left;
+			width: 100%;
+			height: 25px;
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+			border-bottom: 1px dashed #000;
+			cursor: pointer;
+			line-height: 25px;
+			list-style-type: none;
+			
+			.name-participant {
+				float: left;
+				width: ~"calc(100% - 25px)";					
+				padding: 0; margin: 0;
+			}
+			.status-participant {
+				float: left;
+				width: 25px;
+				height: 25px;
+				padding: 0; margin: 0;
+			}
 		}
 	}
 }

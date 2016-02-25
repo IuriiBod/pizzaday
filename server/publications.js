@@ -13,6 +13,11 @@ Meteor.publish('resto', function() {
 	});
 });
 
+Meteor.publish('event', function(groupId) {
+	check(groupId, String);
+	return Events.find({groupId: groupId});
+});
+
 Meteor.publish('usersList', function() {
 	return Meteor.users.find({}, {
 		fields: {

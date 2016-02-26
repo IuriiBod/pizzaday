@@ -48,13 +48,13 @@ Template.restoItem.events ({
 		var groupId = this.resto._id,
 			userId = Meteor.userId(),
 			particip,
-			coworkers = Groups.findOne({_id: this.resto._id}, {fields: {'coworkers':1}}).coworkers;
+			members = Groups.findOne({_id: this.resto._id}, {fields: {'memberships':1}}).memberships;
 
-		for (var i = coworkers.length - 1; i >= 0; i-- ) {
-			if(coworkers[i].id ==  userId ) {
-				console.log(coworkers[i].id, userId);
-				console.log(coworkers[i].participate);
-				particip = +coworkers[i].participate ? 0 : 1;
+		for (var i = members.length - 1; i >= 0; i-- ) {
+			if(members[i].id ==  userId ) {
+				console.log(members[i].id, userId);
+				console.log(members[i].participate);
+				particip = +members[i].participate ? 0 : 1;
 			}
 		}
 
@@ -65,7 +65,15 @@ Template.restoItem.events ({
 
 		console.log(obj);
 
-		Groups.update({_id: groupId}, {$set: { "coworkers": obj }});
+		Groups.update(
+		    { "_id": groupId, "memberships.participate": Meteor.userId() },
+		    {
+		        "$set": {
+		            'memberships.$.id': Meteor.userId(),
+		            'memberships.$.participate': particip
+		        }
+		    }
+		)
 	}
 
 });

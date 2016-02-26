@@ -25,27 +25,26 @@ Template.usersList.events ({
 		var currentGroup = Template.parentData(2).group._id;
 		var userId = this._id;
 
-		var coworkers = Groups.findOne((currentGroup), { 
+		var members = Groups.findOne((currentGroup), { 
 			fields: {
-				coworkers: 1
+				memberships: 1
 			}
-		}).coworkers;
+		}).memberships;
 
 		togleElementsUserList();
 
-		for( var i = coworkers.length - 1; i >= 0; i--) {
-			if (coworkers[i].id === userId) {
-				alert('This user has add');	
-				return;
-			}
-		} 
+		if (userId in members) {
+			alert('This user has add');	
+			return;
+		}
 
 		var member = {
 			id: userId,
 			participate: 0
 		};
 
-		Groups.update({_id: currentGroup}, {$push: { "coworkers": member }})
+		
+		Groups.update({_id: currentGroup}, {$push: { "memberships": member }})
 	}
 
 });

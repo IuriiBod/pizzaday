@@ -1,14 +1,14 @@
-Template.coworkersList.helpers({
+Template.membershipsList.helpers({
 	ownPost: function() {
 		return this._id == Meteor.userId();
 	},
-	coworker: function() {
+	member: function() {
 		return Meteor.users.findOne(this.id);
 	}
 	
 });
 
-Template.coworkersList.events ({
+Template.membershipsList.events ({
   
 	'click li': function(e) {
 		e.preventDefault();
@@ -18,7 +18,7 @@ Template.coworkersList.events ({
 
   		if (!li) return;
 
-  		togleElementsCoworkerList(li);
+  		togleElementsMembershipsList(li);
 	},
 
 	'click .controll-btn-show': function(e, tmpl) {
@@ -26,7 +26,7 @@ Template.coworkersList.events ({
 		e.stopPropagation();
 
 		var currentGroup = Template.parentData(2).group._id;
-		var coworkerId = this.id;
+		var memberId = this.id;
 
 		var owner = Groups.findOne((currentGroup), { 
 			fields: {
@@ -34,23 +34,24 @@ Template.coworkersList.events ({
 			}
 		}).owner;
 
-		togleElementsCoworkerList();
+		togleElementsMembershipsList
 
-		if (owner === coworkerId) {
+		if (owner === memberId) {
 			alert('This is owner');
 			return;
 		}
 
 		var member = {
-			id: coworkerId
+			id: memberId,
+			participate: 0
 		};
 
-		Groups.update({_id: currentGroup}, {$pull: { "coworkers": member }});
+		Groups.update({_id: currentGroup}, {$pull: { "memberships": member }});
 	}
 
 });
 
-function togleElementsCoworkerList(elem) {
+function togleElementsMembershipsList(elem) {
 
 	if(!elem) {
 		$('#group-members-list .controll-btn').removeClass('controll-btn-show');

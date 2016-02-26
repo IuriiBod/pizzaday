@@ -7,9 +7,14 @@ Template.groupCreate.events ({
 	'submit form': function(e) {
 		e.preventDefault();
 
+		var name = $(e.target).find('[name=name-group]').val().trim(),
+			url = $(e.target).find('[name=logo]').val().trim();
+
+		if(!name || !url) return;   
+
 		var group = {
-			name: $(e.target).find('[name=name-group]').val(),
-			url: $(e.target).find('[name=logo]').val()
+			name: name,
+			url: url
 		};
 
 		resetForm(e);
@@ -20,7 +25,6 @@ Template.groupCreate.events ({
 				return alert(error.reason);	
 			}
 
-			// show this result but route anyway
 			if (result.postExists) {
 				alert('This group has vreated');	
 			}

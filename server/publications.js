@@ -9,7 +9,7 @@ Meteor.publish('groups', function() {
 
 Meteor.publish('resto', function() {
 	return Groups.find({
-	    "coworkers": {$elemMatch: {id: this.userId}}
+	    "memberships": {$elemMatch: {id: this.userId}}
 	});
 });
 

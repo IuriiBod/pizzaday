@@ -44,7 +44,7 @@ Template.restoItem.events ({
 
 	'click #participate-in-event': function(e, tmpl) {
 		e.preventDefault();		
-		
+
 		var groupId = this.resto._id,
 			userId = Meteor.userId(),
 			particip,
@@ -52,28 +52,23 @@ Template.restoItem.events ({
 
 		for (var i = members.length - 1; i >= 0; i-- ) {
 			if(members[i].id ==  userId ) {
-				console.log(members[i].id, userId);
-				console.log(members[i].participate);
 				particip = +members[i].participate ? 0 : 1;
 			}
 		}
 
 		var obj = {
-			id: userId,
+			groupId: groupId,
 			participate: particip
 		}
 
-		console.log(obj);
+		Meteor.call('setToggleParticipate', obj, function(error, result) {
+			// обработка ошибок!!!
 
-		Groups.update(
-		    { "_id": groupId, "memberships.participate": Meteor.userId() },
-		    {
-		        "$set": {
-		            'memberships.$.id': Meteor.userId(),
-		            'memberships.$.participate': particip
-		        }
-		    }
-		)
+			// if (error) {
+			// 	return alert(error.reason);	
+			// }
+		});
+	
 	}
 
 });

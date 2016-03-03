@@ -23,7 +23,8 @@ body {
 }
 
 #container {
-	max-width: 800px;	
+	max-width: 800px;
+	min-width: 600px;
 }
 
 .navbar {
@@ -128,6 +129,8 @@ a {
 .participate-in-event {background: url(participate_in_event.png) no-repeat 0 0;}
 .status-participant-1 {background: url(check.png) no-repeat 0 0;}
 .status-participant-0 {background: url(cross.png) no-repeat 0 0;}
+.add-food {background: url(add_food.png) no-repeat 0 0;}
+.rem-food {background: url(rem_food.png) no-repeat 0 0;}
 
 .group-form-container {
 	float: left;
@@ -446,5 +449,193 @@ a {
 				padding: 0; margin: 0;
 			}
 		}
+	}
+}
+
+#resto-menu {
+	float: left;
+	width: ~"calc(100% - 220px)";	
+	margin: 0 0 0 10px; 
+	
+	.resto-menu-container {
+		float: left;
+		width: 100%;
+		
+		h4 {
+			text-align: center;
+		    background: #f0f0f0;
+		    margin: 0;
+		    padding: 5px 0;
+		}
+		.resto-offer-menu {
+			float: left;
+			width: 100%;		
+			margin: 0 0 10px 0;
+			
+			ul {
+				float: left;
+				margin: 0;
+				padding: 0;
+			}
+
+			ul li {
+				float: left;
+				position: relative;
+				padding: 5px 0;
+				width: 100%;
+				list-style-type: none;
+			    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+			    
+			    p {
+					margin: 0;
+					padding: 0;
+			    }
+				
+				.food-item-name {
+					float: left;
+					width: 100%;
+					font-size: 16px;
+				}
+				.food-item-other {
+					float: left;
+					width: 50%;	
+					font-size: 12px;
+				}
+				.add-food-in-resto-order {
+					position: absolute;
+					width: 25px;
+					height: 25px;
+					right: 0;
+				    top: 11px;
+				    opacity: 0;
+				    cursor: pointer;
+				    .trans(all .2s ease-in-out);
+				}
+			}
+			ul li:hover {
+				.add-food-in-resto-order {
+					opacity: 0.5;	
+				}
+			}
+			
+			.resto-menu-container {
+				float: left;
+				width: 100%;
+				border-top: 1px solid rgba(0, 0, 0, 0.2);
+				border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+				
+				a {
+					float: left;
+					width: 120px;
+					color: #777;
+					text-align: center;
+    			    font-size: 16px;
+    			    .trans(all .1s ease-in-out);
+				}
+				a:hover {
+					color: #ddd;
+				}
+
+			}
+		}
+		
+
+		.group-order {
+			float: left;
+			width: 100%;
+			
+			ul {
+				float: left;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			ul li {
+				float: left;
+				position: relative;
+				width: 100%;
+				height: 25px;
+				list-style-type: none;
+			    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+			    line-height: 25px;
+			    
+			    p {
+					margin: 0;
+					padding: 0;
+					text-align: center;
+			    }
+			    
+			    .general-count, .personal-count, .food-item-price {
+			    	float: left;
+			    	width: 15%;
+			    	box-sizing: border-box;
+			    	border-right: 1px solid rgba(0, 0, 0, 0.2);
+			    }
+			    .food-item-name {
+			    	float: left;
+			    	width: 55%;	
+			    	box-sizing: border-box;
+			    	text-align: left;
+			    }
+			    .rem-food-in-resto-order {
+			    	position: absolute;
+					width: 25px;
+					height: 25px;
+					right: 0;
+				    top: 0;
+				    opacity: 0;
+				    cursor: pointer;
+				    .trans(all .2s ease-in-out);
+			    }
+		    }
+		    ul li:hover {
+				.rem-food-in-resto-order {
+					opacity: 0.5;	
+				}
+			}
+			ul li:first-child {
+				height: 40px;
+				line-height: inherit;
+				
+				p {
+					height: 100%;
+				}
+				.food-item-name {
+			    	text-align: center;
+			    }
+			}
+
+			ul li:last-child {	
+				font-weight: bold;
+			}
+		}
+		
+
+	}
+}
+
+#errors{
+	position: fixed;
+	z-index: 10000;
+	padding: 10px;
+	top: 100px;
+	left: 0px;
+	right: 45px;
+	bottom: 0px;
+	pointer-events: none;
+		
+	.alert {
+		animation: fadeOut 2700ms ease-in 0s 1 forwards;
+		-webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards;
+		-moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
+		width: 250px;
+		float: right;
+		clear: both;
+		margin-bottom: 5px;
+		pointer-events: auto;
+		border: 1px solid #FF0000;
+		border-radius: 5px;
+		background: rgba(255, 0, 0, 0.4); 
 	}
 }

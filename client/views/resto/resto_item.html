@@ -14,17 +14,17 @@
 					</a>
 				{{/if}}
 			{{/if}}
-			{{#unless ownPost}}
+			{{#if event}}
 				<a href="" id="participate-in-event" title="participate" class="group-menu-item">
 					<div class="participate-in-event"></div>
-				</a>
-			{{/unless}}
+				</a>	
+			{{/if}}
 		</div>	
 	</div>
 
 	<div id="resto-title">
 		<div class="resto-title-img">
-			<img src="../{{resto.url}}"/>
+			<img src="../../{{resto.url}}"/>
 			{{#if event}}
 				<div class="event-title-banner"></div>
 			{{/if}}
@@ -46,5 +46,38 @@
 				{{/each}}
 			</ul>	
 		</div>
+	</div>
+	<div id="resto-menu">
+		{{#if event}}
+			<div class="resto-menu-container">
+				<div class="resto-offer-menu">
+					<div class="resto-menu-container" id="resto-menu-container">
+						<a href="#" title="all" class="resto-menu-item">all</a>
+						<a href="#" title="pizza" class="resto-menu-item">pizza</a>
+						<a href="#" title="salade" class="resto-menu-item">salade</a>
+						<a href="#" title="drink" class="resto-menu-item">drink</a>
+					</div>	
+					<ul>
+						{{#each food}}
+							{{> restoOfferMenu}}
+						{{/each}}
+					</ul>
+				</div>
+				<div class="group-order">
+					<h4>group order</h4>
+					<ul>
+						<li>
+							<p class="general-count">general quantity</p>
+							<p class="personal-count">personal quantity</p>
+							<p class="food-item-price">price</p>
+							<p class="food-item-name">name</p>
+						</li>
+						{{#each allOrder}}
+							{{> restoGroupOrder}}
+						{{/each}}
+					</ul>	
+				</div>
+			</div>
+		{{/if}}
 	</div>
 </template>

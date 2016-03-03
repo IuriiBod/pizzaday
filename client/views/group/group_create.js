@@ -22,11 +22,12 @@ Template.groupCreate.events ({
 		Meteor.call('groupInsert', group, function(error, result) {
 		
 			if (error) {
-				return alert(error.reason);	
+				throwError(error.reason);
+				return;
 			}
 
 			if (result.postExists) {
-				alert('This group has vreated');	
+				alert('This group has vreated');
 			}
 			
 			Router.go('groupItem', {_id: result._id});

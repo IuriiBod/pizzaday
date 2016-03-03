@@ -26,3 +26,7 @@ Meteor.publish('usersList', function() {
 		}
 	});
 });
+
+Meteor.publish('food', function() {
+	return FoodOffer.find();
+});

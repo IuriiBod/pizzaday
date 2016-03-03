@@ -13,7 +13,7 @@ Template.membershipsList.events ({
 	'click li': function(e) {
 		e.preventDefault();
 
-		var target = event.target;
+		var target = e.target;
 		var li  = target.closest('li');
 
   		if (!li) return;
@@ -34,19 +34,21 @@ Template.membershipsList.events ({
 			}
 		}).owner;
 
-		togleElementsMembershipsList
+		togleElementsMembershipsList();
 
 		if (owner === memberId) {
-			alert('This is owner');
+			throwError('This is owner');
 			return;
 		}
 
 		var member = {
-			id: memberId,
-			participate: 0
-		};
+ 			id: memberId,
+ 			participate: 0,
+ 			order: []
+  		};
+  
+  		Groups.update({_id: currentGroup}, {$pull: { "memberships": member }});
 
-		Groups.update({_id: currentGroup}, {$pull: { "memberships": member }});
 	}
 
 });
@@ -55,7 +57,7 @@ function togleElementsMembershipsList(elem) {
 
 	if(!elem) {
 		$('#group-members-list .controll-btn').removeClass('controll-btn-show');
-		$('#group-members-list .li-coworkers-list').removeClass('li-selected');
+		$('#group-members-list .li-memberships-list').removeClass('li-selected');
 		return;
 	}
 	

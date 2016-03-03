@@ -10,7 +10,7 @@ Template.usersList.events ({
 	'click li': function(e, tmpl) {
 		e.preventDefault();
 		
-		var target = event.target;
+		var target = e.target;
 		var li  = target.closest('li');
 
   		if (!li) return;
@@ -21,30 +21,33 @@ Template.usersList.events ({
 	'click .controll-btn-show': function(e, tmpl) {
 		e.preventDefault();
 		e.stopPropagation();
-		
-		var currentGroup = Template.parentData(2).group._id;
-		var userId = this._id;
 
-		var members = Groups.findOne((currentGroup), { 
-			fields: {
-				memberships: 1
-			}
-		}).memberships;
+		var currentGroup = Template.parentData(2).group._id;
+  		var userId = this._id;
+
+  		var members = Groups.findOne((currentGroup), { 
+  			fields: {
+  				memberships: 1
+  			}
+  		}).memberships;
 
 		togleElementsUserList();
 
-		if (userId in members) {
-			alert('This user has add');	
-			return;
-		}
+		for( var i = members.length - 1; i >= 0; i--) {
+ 			if (members[i].id === userId) {
+ 				throwError('This user has add');
+ 				return;
+ 			}
+ 		} 
 
-		var member = {
-			id: userId,
-			participate: 0
-		};
-
-		
-		Groups.update({_id: currentGroup}, {$push: { "memberships": member }})
+ 		var member = {
+  			id: userId,
+  			participate: 0,
+  			order: []
+  		};
+  
+ 		
+ 		Groups.update({_id: currentGroup}, {$push: { "memberships": member }});
 	}
 
 });

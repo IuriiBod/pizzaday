@@ -43,6 +43,7 @@ Template.restoItem.events ({
 			}
 			
 		});
+
 	},
 
 	'click #change-status-event': function(e, tmpl) {
@@ -82,7 +83,7 @@ Template.restoItem.events ({
 			}
 
 			if (result) {
-				Session.set("editOrder", result.participate);	
+				Session.set("editOrder", result.participate);
 			}
 		});
 	},
@@ -112,7 +113,6 @@ Template.restoItem.events ({
 				Router.go('restoItem', {_id: id});
 		}
 	}
-
 });
 
 var stateDescription = [

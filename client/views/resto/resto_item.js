@@ -11,14 +11,7 @@ Template.restoItem.helpers({
 		return stateDescription[state];
 	},
 	allOrder: function(){
-
-		var allElement = mergeArrays(this.resto.memberships);
-		var allOrder = calcRepeatElements(allElement.all);
-		var personalOrder = calcRepeatElements(allElement.personal);
-
-		var resultObj = buildOrder(allOrder, personalOrder);
-		
-		return resultObj;
+		return orders.buildOrder(this.resto.memberships);
 	}
 	
 });
@@ -122,91 +115,98 @@ var stateDescription = [
 		"delivered"
 	];
 
-function mergeArrays(arr) {
-	var allElements = [],
-		personalElements;
 
-	for (var i = arr.length - 1; i >= 0; i--) {
-		if (arr[i].id === Meteor.userId()) {
-			personalElements = arr[i].order;
+
+var orders = {
+	result: [],
+	mergeArrays: function(arr) {
+		var allElements = [],
+			personalElements;
+
+		for (var i = arr.length - 1; i >= 0; i--) {
+			if (arr[i].id === Meteor.userId()) {
+				personalElements = arr[i].order;
+			}
+
+			allElements = allElements.concat(arr[i].order);
 		}
 
-		allElements = allElements.concat(arr[i].order);
-	}
-
-	return {
-		all: allElements,
-		personal: personalElements
-	};
-};
-
-function calcRepeatElements(arr) {
+		return {
+			general: allElements,
+			personal: personalElements
+		};
+	},
+	calcRepeatElements: function(arr) {
 	
-	var obj = {};
-			
-	for (var i = arr.length - 1; i >= 0; i--) {
-		var str = arr[i];
-		if (str in obj) {
-			obj[str] = (obj[str] + 1);	
-		} else {
-			obj[str] = 1;
+		var obj = {};
+				
+		for (var i = arr.length - 1; i >= 0; i--) {
+			var str = arr[i];
+			if (str in obj) {
+				obj[str] = (obj[str] + 1);	
+			} else {
+				obj[str] = 1;
+			}
 		}
-	}
 
-	return obj;
-};
-
-function buildOrder(all, personal) {
-	var arr = [], obj = {}, g_count = 0, p_count = 0, item, g_sum = 0, p_sum = 0;
-
-	for (var key in all) {
-		obj = {}, g_count =0, p_count = 0;
-
-		if (key in personal) {
-			p_count = personal[key];
-			delete personal[key];
-		}
-		g_count = all[key];
-
-		item = FoodOffer.findOne(key);
-		g_sum += (g_count * item.price);
-		p_sum += (p_count * item.price);
-
-		obj = {
+		return obj;
+	},
+	getFoodsItem: function(key) {
+		return FoodOffer.findOne(key);
+	},
+	calcSum: function(a, b) {
+		return a * b.price;
+	},
+	pushInResult: function(key, g_count, p_count, item) {
+		var obj = {
 				id: key,
-				g_count: all[key],
+				g_count: g_count,
 				p_count: p_count,
 				price: item.price,
 				title: item.title
 			};
 
-		arr.push(obj);
-	}
+		this.result.push(obj);
+	},
+	buildOrder: function(arr) {
 
-	for (var key2 in personal) {
-		obj = {};
-		p_count = personal[key];
-		item = FoodOffer.findOne(key2);
-		p_sum += (p_count * item.price);
+		this.result = [];
 
-		obj = {
-				id: key2,
-				g_count: 0,
-				p_count: p_count,
-				price: item.price,
-				title: item.title
-			};
+		var orders = this.mergeArrays(arr);
+		var generalOrder = this.calcRepeatElements(orders.general);
+		var personalOrder = this.calcRepeatElements(orders.personal);
 
-		arr.push(obj);
-	}
+		var g_count = 0, p_count = 0, item, g_sum = 0, p_sum = 0;
 
-	arr.push({
-		id: '',
-		g_count: g_sum,
-		p_count: p_sum,
-		price: '',
-		title: 'to pay'
-	});
+		for (var key in generalOrder) {
+			g_count =0, p_count = 0;
 
-	return arr;
+			if (key in personalOrder) {
+				p_count = personalOrder[key];
+				delete personalOrder[key];
+			}
+			g_count = generalOrder[key];
+
+			item = this.getFoodsItem(key);
+			
+			g_sum += this.calcSum(g_count, item);
+			p_sum += this.calcSum(p_count, item);
+
+			this.pushInResult(key, generalOrder[key], p_count, item);
+		}
+
+		for (var key2 in personalOrder) {
+			
+			p_count = personalOrder[key];
+			item = this.getFoodsItem(key2);
+			p_sum += this.calcSum(p_count, item);
+
+			this.pushInResult(key2, 0, p_count, item);
+		}
+
+		
+		this.pushInResult('', g_sum, p_sum, {price: '', title: 'to pay'});
+
+		return this.result;
+	}	
 };
